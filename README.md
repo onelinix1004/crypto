@@ -1,255 +1,173 @@
-# 🚀 Crypto Tracker
+# Technical Documentation
 
-A modern, real-time cryptocurrency tracking application built with React, TypeScript, and Vite. Track the latest prices, market data, and trends of the top 100 cryptocurrencies.
+## crypto
 
-![React](https://img.shields.io/badge/React-19.x-61DAFB?style=flat&logo=react&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?style=flat&logo=vite&logoColor=white)
+### Architecture Overview
 
-## ✨ Features
+The `crypto` project is a modern, real-time cryptocurrency tracking application built with React, TypeScript, and Vite. The application fetches and displays real-time cryptocurrency data using the CoinGecko API. The project is structured to be modular and maintainable, with clear separation of concerns between components, services, and utilities.
 
-- 📊 **Real-time Data**: Auto-refresh prices every 2 seconds
-- 🔍 **Smart Search**: Search cryptocurrencies by name or symbol
-- 📈 **Price Charts**: 7-day price history with interactive charts
-- 🎨 **Modern UI**: Glassmorphism design with dark theme
-- 📱 **Responsive**: Works seamlessly on desktop, tablet, and mobile
-- ⚡ **Fast**: Built with Vite for lightning-fast development and builds
-- 🔄 **Sorting Options**: Sort by rank, name, price, market cap, or 24h change
-- 👁️ **View Modes**: Toggle between grid and list views
-- 💰 **Detailed Stats**: Market cap, volume, supply, and more
+### Setup & Installation
 
-## 🖼️ Screenshots
-
-### Home Page - Grid View
-
-Display of top 100 cryptocurrencies with real-time prices and market data.
-
-### Coin Detail Page
-
-Detailed information with 7-day price chart and comprehensive statistics.
-
-## 🛠️ Tech Stack
-
-| Technology           | Version | Purpose                 |
-| -------------------- | ------- | ----------------------- |
-| **React**            | 19.x    | UI Library              |
-| **TypeScript**       | 5.9.x   | Type-safe JavaScript    |
-| **Vite**             | 7.x     | Build tool & dev server |
-| **React Router DOM** | 7.x     | Client-side routing     |
-| **Recharts**         | 3.x     | Chart visualization     |
-| **CoinGecko API**    | v3      | Cryptocurrency data     |
-
-## 📦 Installation
-
-### Prerequisites
+#### Prerequisites
 
 - **Node.js** 18.x or higher
 - **npm** or **yarn**
 
-### Quick Start
+#### Quick Start
+
+1. **Clone the repository**
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/crypto-tracker.git
+git clone https://github.com/you
+```
 
-# Navigate to project directory
+2. **Navigate to the project directory**
+
+```bash
 cd crypto
+```
 
-# Install dependencies
+3. **Install dependencies**
+
+```bash
 npm install
+```
 
-# Start development server
+4. **Run the development server**
+
+```bash
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`
-
-## 🚀 Usage
-
-### Development
+5. **Open the application in your browser**
 
 ```bash
-# Start dev server with hot reload
-npm run dev
+http://localhost:5173
 ```
 
-### Production Build
+### API Documentation
+
+#### CoinGecko API
+
+The application uses the CoinGecko API to fetch cryptocurrency data. The API endpoints used are:
+
+- **Fetching top 100 cryptocurrencies by market cap**
 
 ```bash
-# Build for production
+GET /coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false
+```
+
+- **Fetching detailed coin data**
+
+```bash
+GET /coins/{id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false
+```
+
+- **Fetching 7-day price chart data**
+
+```bash
+GET /coins/{id}/market_chart?vs_currency=usd&days=7
+```
+
+### Database Schema (if applicable)
+
+The application does not use a traditional database. Instead, it fetches data from the CoinGecko API and stores it in memory. If you need to persist data, you can use a database like SQLite or PostgreSQL.
+
+### Configuration
+
+#### Environment Variables
+
+The application uses environment variables to configure API keys and other settings. The `.env.example` file provides a template for these variables. To use the application, create a `.env` file and fill in the necessary values.
+
+```env
+# CoinGecko API (currently using public endpoints, no key needed)
+# If you have a Pro account, add your API key here:
+# VITE_COINGECKO_API_KEY=your_api_key_here
+
+# CoinGecko API Base URL (optional, defaults to public API)
+# VITE_COINGECKO_BASE_URL=https://api.coingecko.com/api/v3
+
+# App Title (optional)
+# VITE_APP_TITLE=Crypto Tracker
+
+# Auto-refresh interval in milliseconds (default: 2000ms = 2 seconds)
+# VITE_REFRESH_INTERVAL=2000
+
+# Number of cryptos to fetch (default: 100)
+# VITE_CRYPTO_LIMIT=100
+
+# Enable/disable news feature (optional)
+# VITE_ENABLE_NEWS=false
+
+# Enable/disable portfolio feature (optional, for future use)
+# VITE_ENABLE_PORTFOLIO=false
+
+# Enable debug mode (shows console logs)
+# VITE_DEBUG_MODE=false
+```
+
+### Development Guidelines
+
+#### Code Style
+
+- **TypeScript**: Use explicit types and avoid implicit `any`.
+- **React Components**: Prefer functional components with TypeScript.
+- **Linting**: Use ESLint with the recommended configuration.
+
+#### Testing
+
+- **Unit Tests**: Write unit tests for individual components and services.
+- **Integration Tests**: Test the integration between components and services.
+
+### Deployment Instructions
+
+#### Production Build
+
+1. **Build the project**
+
+```bash
 npm run build
+```
 
-# Preview production build
+2. **Serve the production build**
+
+```bash
 npm run preview
 ```
 
-### Linting
+3. **Deploy to a web server**
 
-```bash
-# Run ESLint
-npm run lint
-```
+You can deploy the production build to a web server like Nginx or Apache. Make sure to configure the server to serve the static files in the `dist` directory.
 
-## 📁 Project Structure
+### File Structure
 
 ```
 crypto/
-├── public/                 # Static assets
+├── public/                    # File tĩnh (logo, favicon)
+│   └── vite.svg
 ├── src/
-│   ├── components/        # Reusable UI components
-│   │   ├── ChartSection.tsx
-│   │   ├── Controls.tsx
-│   │   ├── CryptoCard.tsx
-│   │   ├── CryptoList.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Header.tsx
-│   │   ├── Loading.tsx
-│   │   ├── NoResults.tsx
-│   │   ├── PriceSection.tsx
-│   │   └── StatsGrid.tsx
-│   ├── layout/            # Layout components
-│   │   └── MainLayout.tsx
-│   ├── pages/             # Page components
-│   │   ├── CoinDetail.tsx
-│   │   ├── CryptoNews.tsx
-│   │   └── Home.tsx
-│   ├── services/          # API services
-│   │   ├── coinGecko.ts
-│   │   └── newsApi.ts
-│   ├── utils/             # Utility functions
-│   │   └── formatter.ts
-│   ├── styles/            # Additional CSS
-│   ├── App.tsx           # Main App component
-│   ├── main.tsx          # Entry point
-│   └── index.css         # Global styles
-├── docs/                  # Documentation
-│   └── HUONG_DAN_TAO_DU_AN.md
-├── index.html
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
+│   ├── components/            # UI components
+│   ├── pages/                 # Pages
+│   ├── services/              # API services
+│   ├── utils/                 # Utility functions
+│   ├── styles/                # CSS styles
+│   ├── App.tsx                # Main application component
+│   ├── index.css              # Global styles
+│   ├── main.tsx               # Entry point
+├── .env.example               # Environment variables template
+├── .gitignore                 # Git ignore file
+├── CHANGELOG.md               # Changelog
+├── CONTRIBUTING.md            # Contributing guidelines
+├── LICENSE                    # License
+├── package.json               # Project dependencies
+├── README.md                  # Project documentation
+├── tsconfig.app.json          # TypeScript configuration for app
+├── tsconfig.json              # TypeScript configuration
+├── tsconfig.node.json         # TypeScript configuration for node
+├── vite.config.ts             # Vite configuration
+├── WORKFLOW-GUIDE.md          # Workflow guide
 ```
 
-## 🔑 Key Features Explained
+### Conclusion
 
-### Real-time Price Updates
-
-The app automatically fetches fresh data from CoinGecko API every 2 seconds:
-
-```typescript
-useEffect(() => {
-  fetchCryptoData();
-  const interval = setInterval(fetchCryptoData, 2000);
-  return () => clearInterval(interval);
-}, []);
-```
-
-### Flexible Sorting
-
-Sort cryptocurrencies by:
-
-- Market Cap Rank (default)
-- Name (A-Z)
-- Price (Low to High / High to Low)
-- 24h Change
-- Market Cap
-
-### Interactive Charts
-
-Built with Recharts for smooth, responsive price charts showing 7-day historical data.
-
-## 🎨 Design Philosophy
-
-- **Glassmorphism**: Modern frosted glass effect with backdrop blur
-- **Dark Theme**: Eye-friendly dark background with vibrant accents
-- **Light Blue Accent**: #ADD8E6 for primary actions and highlights
-- **Smooth Animations**: Hover effects and transitions for better UX
-- **Responsive Grid**: Auto-adjusting layout for all screen sizes
-
-## 🌐 API Reference
-
-### CoinGecko API Endpoints Used
-
-| Endpoint                   | Purpose                              |
-| -------------------------- | ------------------------------------ |
-| `/coins/markets`           | Get list of top 100 cryptocurrencies |
-| `/coins/{id}`              | Get detailed coin information        |
-| `/coins/{id}/market_chart` | Get 7-day price history              |
-
-> [!NOTE]
-> CoinGecko's free API has a rate limit of **30 requests/minute**. For higher limits, consider getting an API key.
-
-## 🔧 Configuration
-
-### Vite Config
-
-```typescript
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-
-export default defineConfig({
-  plugins: [react()],
-});
-```
-
-### TypeScript Config
-
-The project uses three TypeScript config files:
-
-- `tsconfig.json` - Base configuration
-- `tsconfig.app.json` - Application code
-- `tsconfig.node.json` - Build scripts
-
-## 🚧 Roadmap
-
-Future enhancements planned:
-
-- [ ] Portfolio tracking
-- [ ] Price alerts
-- [ ] Favorites/Watchlist
-- [ ] Multi-currency support (EUR, VND, etc.)
-- [ ] Historical price comparison
-- [ ] News integration
-- [ ] PWA support
-- [ ] Dark/Light theme toggle
-- [ ] Export data to CSV
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgments
-
-- [CoinGecko](https://www.coingecko.com/) for providing free cryptocurrency API
-- [Recharts](https://recharts.org/) for beautiful chart components
-- [Vite](https://vitejs.dev/) for the amazing build tool
-
-## 📚 Documentation
-
-- 🇻🇳 [Vietnamese Setup Guide](docs/HUONG_DAN_TAO_DU_AN.md) - Hướng dẫn chi tiết bằng tiếng Việt
-- 🇬🇧 [API Documentation](docs/API.md) - API reference and usage
-
-## 💬 Support
-
-If you have any questions or run into issues:
-
-1. Check existing [Issues](https://github.com/yourusername/crypto-tracker/issues)
-2. Create a new issue with detailed description
-3. Contact the maintainer
-
----
-
-**Made with ❤️ using React + TypeScript + Vite**
-
-**⭐ Star this repo if you find it helpful!**
+The `crypto` project is a comprehensive and well-structured application for tracking cryptocurrencies in real-time. With a focus on modularity, maintainability, and developer usability, the project provides a solid foundation for building and extending cryptocurrency tracking features.
